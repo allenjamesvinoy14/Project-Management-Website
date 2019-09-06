@@ -4,6 +4,7 @@
     session_start();
 
     require 'config/db.php';
+    require_once 'emailController.php';
 
     $errors = array();
     $username = "";
@@ -79,6 +80,8 @@
                 $_SESSION['email'] = $email;
                 $_SESSION['verified'] = $verified;
                 //set flash message
+
+                sendVerificationEmail($email,$token);
 
                 $_SESSION['message'] = "You are now logged in!";
                 $_SESSION['alert-class'] = "alert-success"; 
