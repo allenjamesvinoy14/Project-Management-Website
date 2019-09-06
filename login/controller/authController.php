@@ -4,6 +4,7 @@
     session_start();
 
     require 'config/db.php';
+    require_once 'emailController.php';
 
     $errors = array();
     $username = "";
@@ -80,6 +81,8 @@
                 $_SESSION['verified'] = $verified;
                 //set flash message
 
+                sendVerificationEmail($email,$token);
+
                 $_SESSION['message'] = "You are now logged in!";
                 $_SESSION['alert-class'] = "alert-success"; 
                 header('location: index.php');
@@ -145,5 +148,26 @@
         unset($_SESSION['verified']);
         header('location: login.php');
         exit();
+    }
+
+    function verifyUser($token){
+        global $conn; 
+        $sql = "SELECT * FROM users WHERE token = '$token' LIMIT 1";
+        $result = mysqli_query($conn,$sql);
+
+        if($result->num_rows>0){
+            $user = $result->fetch_assoc();
+            $update_query = "UPDATE users SET verified = 1 WHERE token = '$token'";
+
+            if(mysqli_query($conn,$update_query)){
+                // log user in
+                $_SESSION['verified'] = $user['verified'];
+                $_SESSION['message'] = "Your email was succesfully verified";
+                header('location: index.php');
+                exit();
+            }else{
+                echo 'User not found';  
+            }
+        }
     }
 ?>
