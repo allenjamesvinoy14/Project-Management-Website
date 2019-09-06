@@ -6,5 +6,5 @@
     define('DB_NAME','user-verification');
 
     define('EMAIL','jamesallenvinoy@gmail.com');
-    define('PASS','Foff');
+    define('PASS','Jamesallen4');
 ?>
