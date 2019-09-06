@@ -149,4 +149,25 @@
         header('location: login.php');
         exit();
     }
+
+    function verifyUser($token){
+        global $conn; 
+        $sql = "SELECT * FROM users WHERE token = '$token' LIMIT 1";
+        $result = mysqli_query($conn,$sql);
+
+        if($result->num_rows>0){
+            $user = $result->fetch_assoc();
+            $update_query = "UPDATE users SET verified = 1 WHERE token = '$token'";
+
+            if(mysqli_query($conn,$update_query)){
+                // log user in
+                $_SESSION['verified'] = $user['verified'];
+                $_SESSION['message'] = "Your email was succesfully verified";
+                header('location: index.php');
+                exit();
+            }else{
+                echo 'User not found';  
+            }
+        }
+    }
 ?>

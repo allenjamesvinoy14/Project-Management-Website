@@ -1,6 +1,13 @@
 <?php 
     require_once 'controller/authController.php'; 
 
+    if(isset($_GET['token'])){
+        $token = $_GET['token'];
+        verifyUser($token);
+    }
+
+    // below makes sure that I have to login to access the index.php file.
+
     if(!isset($_SESSION['id'])){
         header("location: login.php");
         exit();
@@ -44,10 +51,10 @@
                     </div>
                 <?php endif; ?>
 
-                <?php if($_SESSION['verified']): ?>
+                <!-- <?php if($_SESSION['verified']): ?>
                     <button class="btn btn-block btn-lg btn-primary">I am verified</button>
-                <?php endif; ?> 
-            </div>
+                <?php endif; ?>  -->
+            </div>  
         </div>
     </div>
 </body>
