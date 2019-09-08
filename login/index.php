@@ -1,10 +1,10 @@
 <?php 
     require_once 'controller/authController.php'; 
 
-    if(isset($_GET['token'])){
-        $token = $_GET['token'];
-        verifyUser($token);
-    }
+    // if(isset($_GET['token'])){
+    //     $token = $_GET['token'];
+    //     verifyUser($token);
+    // }
 
     // below makes sure that I have to login to access the index.php file.
 
