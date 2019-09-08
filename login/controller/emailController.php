@@ -1,5 +1,5 @@
 <?php
-    require_once 'vendor/autoload.php'; // automatically loads any class coming from the libraries in the vendor folder
+    require_once '../vendor/autoload.php'; // automatically loads any class coming from the libraries in the vendor folder
     require_once 'config/db.php';
 
     // Create the Transport
