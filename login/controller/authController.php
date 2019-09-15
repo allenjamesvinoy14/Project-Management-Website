@@ -3,7 +3,7 @@
     // to use sessions we need to start a session at the top of the page.
     session_start();
 
-    require 'config/db.php';
+    require '../config/db.php';
     //require_once 'emailController.php';
 
     $errors = array();
@@ -63,7 +63,7 @@
             // 1. hashing the password
             // 2. generating token    
 
-            $password = password_hash($password,PASSWORD_DEFAULT);
+            // $password = password_hash($password,PASSWORD_DEFAULT);
             $token = bin2hex(random_bytes(50)); //string of size 100
             $verified = false;
 
@@ -119,7 +119,7 @@
             $result = $stmt->get_result();  
             $user = $result->fetch_assoc();
 
-            if(password_verify($password,$user['password'])){
+            if($password===$user['password']){
                 //login successful 
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
@@ -129,7 +129,7 @@
                 //set flash message
                 $_SESSION['message'] = "You are now logged in!";
                 $_SESSION['alert-class'] = "alert-success"; 
-                header('location: index.php');
+                header('location: ../main/index.php');
                 exit();
             }
             else{
@@ -149,7 +149,7 @@
         header('location: login.php');
         exit();
     }
-
+ 
     function verifyUser($token){
         global $conn; 
         $sql = "SELECT * FROM users WHERE token = '$token' LIMIT 1";

@@ -1,4 +1,5 @@
 <?php
+    require 'maincontroller/projectController.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,30 +13,23 @@
 </head>
 <body>
     <div class="main">
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
-        <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">
-            <h1>Hello</h1>
-        </div>
+        <?php
+            for($i=0;$i<$_SESSION['projcount'];$i++){
+                echo '<div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-5 mb-5">';
+                    echo '<table>';
+                        echo '<tr>';
+                            echo '<td>Project ID:</td> <td>'.$_SESSION['projid'].'</td>';
+                        echo '</tr>';
+                        echo '<tr>';
+                            echo '<td>Project Name:</td> <td>'.$_SESSION['projname'].'</td>';
+                        echo '</tr>';
+                        echo '<tr>';
+                            echo '<td>Project Description:</td> <td>'.$_SESSION['projdesc'].'</td>';
+                        echo '</tr>';    
+                    echo '</table>';
+                echo '</div>';
+            }
+        ?>
     </div>
 </body>
 </html>
