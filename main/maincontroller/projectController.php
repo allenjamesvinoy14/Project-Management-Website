@@ -20,4 +20,8 @@
         array_push($_SESSION['projdesc'],$res['proj_desc']);
     }
     $stmt->close();
+
+    if(isset($_POST['addproject-btn'])){
+        
+    }
 ?>
