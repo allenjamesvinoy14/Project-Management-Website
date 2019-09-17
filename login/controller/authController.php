@@ -1,7 +1,12 @@
 <?php
 
     // to use sessions we need to start a session at the top of the page.
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start(); 
+    }
+    else {
+        header("location: ../index.php"); 
+    }
 
     require '../config/db.php';
     //require_once 'emailController.php';

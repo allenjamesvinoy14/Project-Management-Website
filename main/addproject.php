@@ -1,3 +1,4 @@
+<?php require_once 'maincontroller/projectController.php';?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    
+
     <script>
         $(function() {
             function split( val ) {
@@ -55,7 +56,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2 form-div">
-                <form method="get">
+                <?php if(isset($_SESSION['insert-proj-error'])):?>
+                    <div class="alert alert-danger">
+                        <?php
+                            echo $_SESSION['insert-proj-error']; 
+                            unset($_SESSION['insert-proj-error']);
+                        ?> 
+                    </div>
+                <?php endif; ?>
+                <form action="addproject.php" method="post">
                     <h3 class="text-center">ADD PROJECT</h3>
 
                     <div class="form-group">
