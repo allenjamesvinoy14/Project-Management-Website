@@ -10,12 +10,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylemain.css">
     <link rel="stylesheet" href="../style.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <title>ProJ</title>
 
     <script>
         $(function(){
             $(".requestbtn").on('click',function(){
-                window.location.replace('../main/test.php');
+                str = this.id;
+                $.ajax({
+                    type : 'GET',
+                    url : '../main/addrequest.php',
+                    dataType : 'html',
+                    data: {
+                        id : str
+                    },
+                    success : function(data){                                               
+                        alert(data);
+                    }   
+                });
             });
         });
     </script>
@@ -30,6 +43,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="mr-auto"></div>
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Projects</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../main/addproject.php">Add Project</a>
                     </li>
@@ -55,7 +71,7 @@
                 </div>
                 <br>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
-                    <button type="submit" name=<?php echo $_SESSION['projid'][$i]?> class="requestbtn">
+                    <button type="submit" id=<?php echo $_SESSION['projid'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
                         REQUEST TO JOIN
                     </button> 
                 </div>
@@ -64,5 +80,3 @@
     <?php endfor; ?>
 </body>
 </html>
-
-btn btn-primary btn-block btn-lg

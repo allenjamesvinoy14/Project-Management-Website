@@ -1,0 +1,19 @@
+<?php for($i=0;$i<$_SESSION['projcount'];$i++): ?>
+            <div class="col-md-8 offset-md-2 h-100 row justify-content-center projitems mt-10 mb-10">
+                <table>
+                    <tr>
+                        <td>Project Name:</td> <td><?php echo $_SESSION['projname'][$i]; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Project Description:</td> <td><?php echo $_SESSION['projdesc'][$i]; ?></td>
+                    </tr>  
+                    <!-- <tr>
+                        <div>
+                            <button type="submit" name=<?php echo $_SESSION['projid'][$i]?> class="btn btn-primary btn-block btn-lg">
+                                REQUEST TO JOIN
+                            </button>
+                        </div>  
+                    </tr> -->
+                </table>
+            </div>
+        <?php endfor; ?>
