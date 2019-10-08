@@ -1,26 +1,5 @@
 1. Add referential intergrity feature to all foreign keys
 
-2. Facility to accept people into projects
+3. Adding skills wherever required.
 
- <!-- <?php for($i=0;$i<$_SESSION['myprojcount'];$i++): ?>
-    <div class="main">
-            <div class="col-md-8 offset-md-2 justify-content-center projitems">
-                <div class="row col-md-8 offset-md-3 col1 center-block">
-                    <table>
-                        <tr>
-                            <td>Project Name:</td> <td><?php echo $_SESSION['projname'][$i]; ?></td>
-                        </tr>
-                        <tr>
-                            <td>Project Description:</td> <td><?php echo $_SESSION['projdesc'][$i]; ?></td>
-                        </tr>  
-                    </table>
-                </div>
-                <br>
-                <div class="row col-md-4 offset-md-8 col1 center-block">
-                    <button type="submit" id=<?php echo $_SESSION['projid'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
-                        REQUEST TO JOIN
-                    </button> 
-                </div>
-            </div>
-    </div>
-    <?php endfor; ?> -->
+2. Facility to remove the items as request is accepted

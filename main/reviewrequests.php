@@ -18,7 +18,17 @@
         $(function(){
             $(".requestbtn").on('click',function(){
                 str = this.id;
-                window.location = "../main/reviewrequests.php?id="+str+"&review=1";
+                $.ajax({
+                    type : 'GET',
+                    url : '../main/acceptrequest.php',
+                    dataType : 'html',
+                    data: {
+                        id : str
+                    },
+                    success : function(data){                                               
+                        alert(data);
+                    }   
+                });
             });
         });
     </script>
@@ -46,31 +56,27 @@
             </div>
         </nav>
     </div>
-    <?php for($i=0;$i<$_SESSION['myprojcount'];$i++): ?>
-    <?php if($_SESSION['accepted'][$i] == 1 and $_SESSION['userid'][$i]==$_SESSION['id']): ?>
+    <?php for($i=0;$i<$_SESSION['requestcount'];$i++): ?>
     <div class="main">
             <div class="col-md-8 offset-md-2 justify-content-center projitems">
                 <div class="row col-md-8 offset-md-3 col1 center-block">
                     <table>
                         <tr>
-                            <td>Project Name:</td> <td><?php echo $_SESSION['proj_name'][$i]; ?></td>
+                            <td>User Name:</td> <td><?php echo $_SESSION['requests-username'][$i]; ?></td>
                         </tr>
                         <tr>
-                            <td>Project Description:</td> <td><?php echo $_SESSION['proj_desc'][$i]; ?></td>
+                            <td>Email:</td> <td><?php echo $_SESSION['requests-email'][$i]; ?></td>
                         </tr>  
                     </table>
                 </div>
                 <br>
-                <?php if($_SESSION['projlead_id'][$i] === $_SESSION['id']): ?>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
-                    <button type="submit" id=<?php echo $_SESSION['proj_id'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
-                        REVIEW REQUESTS
+                    <button type="submit" id=<?php echo $_SESSION['requests-user_id'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
+                        ACCEPT REQUEST
                     </button> 
                 </div>
-                <?php endif; ?>
             </div>
     </div>
-    <?php endif; ?>
     <?php endfor; ?>
 </body>
 </html>
