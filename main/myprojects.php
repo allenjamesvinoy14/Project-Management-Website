@@ -15,22 +15,6 @@
     <title>ProJ</title>
 
     <script>
-        $(function(){
-            $(".requestbtn").on('click',function(){
-                str = this.id;
-                $.ajax({
-                    type : 'GET',
-                    url : '../main/addrequest.php',
-                    dataType : 'html',
-                    data: {
-                        id : str
-                    },
-                    success : function(data){                                               
-                        alert(data);
-                    }   
-                });
-            });
-        });
     </script>
 </head>
 <body>
@@ -44,7 +28,7 @@
                 <div class="mr-auto"></div>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
+                        <a class="nav-link" href="../main/myprojects.php">My Projects</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../main/addproject.php">Add Project</a>
@@ -56,27 +40,31 @@
             </div>
         </nav>
     </div>
-    <?php for($i=0;$i<$_SESSION['projcount'];$i++): ?>
+    <?php for($i=0;$i<$_SESSION['myprojcount'];$i++): ?>
+    <?php if($_SESSION['accepted'][$i] == 1 and $_SESSION['userid'][$i]==$_SESSION['id']): ?>
     <div class="main">
             <div class="col-md-8 offset-md-2 justify-content-center projitems">
                 <div class="row col-md-8 offset-md-3 col1 center-block">
                     <table>
                         <tr>
-                            <td>Project Name:</td> <td><?php echo $_SESSION['projname'][$i]; ?></td>
+                            <td>Project Name:</td> <td><?php echo $_SESSION['proj_name'][$i]; ?></td>
                         </tr>
                         <tr>
-                            <td>Project Description:</td> <td><?php echo $_SESSION['projdesc'][$i]; ?></td>
+                            <td>Project Description:</td> <td><?php echo $_SESSION['proj_desc'][$i]; ?></td>
                         </tr>  
                     </table>
                 </div>
                 <br>
+                <?php if($_SESSION['projlead_id'][$i] === $_SESSION['id']): ?>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
-                    <button type="submit" id=<?php echo $_SESSION['projid'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
-                        REQUEST TO JOIN
+                    <button type="submit" id=<?php echo $_SESSION['proj_id'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
+                        REVIEW REQUESTS
                     </button> 
                 </div>
+                <?php endif; ?>
             </div>
     </div>
+    <?php endif; ?>
     <?php endfor; ?>
 </body>
 </html>

@@ -2,8 +2,8 @@
     require '../config/db.php';
     require '../login/controller/authController.php';
 
-    $emailQuery = "SELECT * FROM projects";
-    $stmt = $conn->prepare($emailQuery);
+    $Query = "SELECT * FROM projects";
+    $stmt = $conn->prepare($Query);
     $stmt->execute(); 
 
     $result = $stmt->get_result();  
@@ -25,10 +25,8 @@
     if(isset($_POST['addproject-btn'])){
         $projectname = $_POST['projname'];
         $projectdesc = $_POST['projdesc'];
-        
-        // $_SESSION['globalskills'] = $skills;
-        // header('location:../main/new.php');
 
+        //1. Adding project into projects table
         $insertquery = "INSERT INTO projects (PROJ_NAME,PROJ_DESC,PROJLEAD_ID) VALUES(?,?,?)";
         $stmt = $conn->prepare($insertquery);
         $stmt->bind_param('ssi',$projectname,$projectdesc,$_SESSION['id']);
@@ -37,19 +35,32 @@
 
         $get_lastid_query = "SELECT LAST_INSERT_ID()";
         $stmt = $conn->prepare($get_lastid_query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $result = $result->fetch_assoc();
-        $projid = $result['LAST_INSERT_ID()'];
-        // $_SESSION['pid'] = $result;
-        // header('location:../main/new.php');
-        // exit();
+        //$stmt->execute();
+
         if(!$stmt->execute()){
             $_SESSION['insert-proj-error']="Database error: Failed to complete transaction: create new project";
             header('location:../main/addproject.php');
             exit();
         }
+
+        $result = $stmt->get_result();
         $stmt->close();
+        //1. ends 
+
+        $result = $result->fetch_assoc();
+        $projid = $result['LAST_INSERT_ID()'];
+
+        //2. Adding the project head as a project member of the project by default
+        $insert_into_project_members_query = "INSERT INTO projectmembers (PROJ_ID,USER_ID,ACCEPTED) VALUES(?,?,?)";
+        $bit = 1;
+        $stmt = $conn->prepare($insert_into_project_members_query);
+        $stmt->bind_param('iii',$projid,$_SESSION['id'],$bit);
+        $stmt->execute();
+        $stmt->close();
+        //2. ends
+
+
+        //3. Adding skills required for the project into a seperate table to maintain normalisation.
 
         $skills = $_POST['skillset'];
         $str_arr=explode(",", $skills);
@@ -80,6 +91,9 @@
                 $insertsql->close();
             }
         }
+        //3. ends
+
+
         header('location:../main/index.php');
         exit();
     }
@@ -98,4 +112,36 @@
     //     }
     //     $stmt->close();
     // }
+    if(isset($_GET['myprojects'])){
+        $get_my_project_query = "SELECT * FROM projectmembers INNER JOIN projects ON projlead_id = user_id WHERE accepted = 1";
+
+        $stmt = $conn->prepare($get_my_project_query);
+        if($stmt->execute()){
+            $resultmyproj = $stmt->get_result();
+
+            $count = $resultmyproj->num_rows;
+            $_SESSION['myprojcount'] = $count;
+
+            //CHANGE THIS TO THE SCHEMA OF THE JOIN RESULT
+
+            $_SESSION['myprojid'] = array();
+            $_SESSION['proj_id'] = array();
+            $_SESSION['userid'] = array();
+            $_SESSION['accepted'] = array();
+            $_SESSION['proj_name'] = array();
+            $_SESSION['proj_desc'] = array();
+            $_SESSION['projlead_id'] = array();
+
+
+            foreach($resultmyproj as $resmp){
+                array_push($_SESSION['myprojid'],$resmp['id']);
+                array_push($_SESSION['proj_id'],$resmp['proj_id']);
+                array_push($_SESSION['userid'],$resmp['user_id']);
+                array_push($_SESSION['accepted'],$resmp['accepted']);
+                array_push($_SESSION['proj_name'],$resmp['proj_name']);
+                array_push($_SESSION['proj_desc'],$resmp['proj_desc']);
+                array_push($_SESSION['projlead_id'],$resmp['projlead_id']);
+            }
+        }
+    }
 ?>
