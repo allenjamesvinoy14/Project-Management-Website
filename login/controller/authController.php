@@ -125,11 +125,16 @@
 
             if($password===$user['password']){
                 //login successful 
+
+                $loginuser = new User($user['username'],$user['email'],$user['password'],$user['token'],$user['verified']);
+                $loginuser->setUserId($user['id']);
+
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['verified'] = $user['verified'];
 
+                $_SESSION['cur-user'] = $loginuser;
                 //set flash message
                 $_SESSION['message'] = "You are now logged in!";
                 $_SESSION['alert-class'] = "alert-success"; 

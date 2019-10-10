@@ -1,5 +1,6 @@
 <?php
     class User{
+        private $userid;
         private $username;
         private $email;
         private $password;
@@ -14,7 +15,10 @@
             $this->token = $token;
             $this->verified = $verified;
         }
-
+        function setUserId($userid)
+        {
+            $this->userid = $userid;
+        }
         function setUsername($username)
         {
             $this->username = $username;
@@ -33,23 +37,26 @@
         }
         function getUsername()
         {
-            return $username;
+            return $this->username;
         }
         function getEmail()
         {
-            return $email;
+            return $this->email;
         }
         function getPassword()
         {
-            return $password;
+            return $this->password;
         }
         function getToken()
         {
-            return $token;
+            return $this->token;
         }
         function getVerificationStatus()
         {
-            return $verified;
+            return $this->verified;
+        }
+        function getUserId(){
+            return $this->userid;
         }
     }
 ?>

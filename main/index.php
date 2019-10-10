@@ -46,16 +46,32 @@
                 <div class="row col-md-8 offset-md-3 col1 center-block">
                     <table>
                         <tr>
-                            <td>Project Name:</td> <td><?php echo $_SESSION['projname'][$i]; ?></td>
+                            <td>Project Name:</td> <td><?php echo $_SESSION['projects'][$i]->getProjectName(); ?></td>
                         </tr>
                         <tr>
-                            <td>Project Description:</td> <td><?php echo $_SESSION['projdesc'][$i]; ?></td>
+                            <td>Project Description:</td> <td><?php echo $_SESSION['projects'][$i]->getProjectDesc(); ?></td>
+                        </tr> 
+                        <tr>
+                            <td>Skills: </td> 
+                            <td>
+                                <?php
+                                    $c = 0;
+                                    $skills = $_SESSION['projects'][$i]->getSkills();
+                                    foreach($skills as $s)
+                                    {
+                                        echo $s->getSkillName();
+                                        $c++;
+                                        if($c!=count($skills))
+                                            echo ",";
+                                    }
+                                ?> 
+                            </td>
                         </tr>  
                     </table>
                 </div>
                 <br>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
-                    <button type="submit" name=<?php echo $_SESSION['projid'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
+                    <button type="submit" name=<?php echo $_SESSION['projects'][$i]->getProjectId()?> class="requestbtn btn btn-primary btn-block btn-lg">
                         REQUEST TO JOIN
                     </button> 
                 </div>
