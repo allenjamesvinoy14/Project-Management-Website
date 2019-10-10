@@ -11,8 +11,10 @@
 
     $_SESSION['projcount'] = $count;
     
-    $_SESSION['projects'] = array();
+    $_SESSION['projects'] = array(); //session variable that maintains all the projects in the website.
 
+
+    //The below foreach is to fetch project details from the database and store it in an array of project objects.
     foreach($result as $res){
         $project = new Project($res['proj_name'],$res['proj_desc'],$res['projlead_id']);
         $project->setProjectId($res['proj_id']);
@@ -29,10 +31,13 @@
         array_push($_SESSION['projects'],$project);
     }
 
+
+    //if new project is added
     if(isset($_POST['addproject-btn'])){
 
         $newproject = new Project($_POST['projname'],$_POST['projdesc'],$_SESSION['cur-user']->getUserId());
 
+        //adding project to the database.
         $insertquery = "INSERT INTO projects (PROJ_NAME,PROJ_DESC,PROJLEAD_ID) VALUES(?,?,?)";
         $addprojectparams = array($newproject->getProjectName(),$newproject->getProjectDesc(),$newproject->getProjectLeadDetails());
 
@@ -51,6 +56,9 @@
             exit();
         }
 
+
+        // adding skills data to the projectskills table. A seperate table is maintained to ensure 3NF.
+        
         $skills = $_POST['skillset'];
         $str_arr=explode(",", $skills);
         
