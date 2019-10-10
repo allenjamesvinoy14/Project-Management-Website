@@ -3,13 +3,14 @@
     require '../login/controller/authController.php';
 
     $emailQuery = "SELECT * FROM projects";
-    $stmt = $conn->prepare($emailQuery);
-    $stmt->execute(); 
+    // $stmt = $conn->prepare($emailQuery);
+    // $stmt->execute(); 
 
-    $result = $stmt->get_result();  
+    $result = $conn->query($emailQuery); 
     $count = $result->num_rows;
-    $_SESSION['projcount'] = $count;
 
+    $_SESSION['projcount'] = $count;
+    
     $_SESSION['projid'] = array();
     $_SESSION['projname'] = array();
     $_SESSION['projdesc'] = array();
@@ -30,26 +31,26 @@
         // header('location:../main/new.php');
 
         $insertquery = "INSERT INTO projects (PROJ_NAME,PROJ_DESC,PROJLEAD_ID) VALUES(?,?,?)";
-        $stmt = $conn->prepare($insertquery);
-        $stmt->bind_param('ssi',$projectname,$projectdesc,$_SESSION['id']);
-        $stmt->execute();
-        $stmt->close();
+        $addprojectparams = array($projectname,$projectdesc,$_SESSION['id']);
+
+        $insertresult = $conn->query($insertquery,$addprojectparams);
+
 
         $get_lastid_query = "SELECT LAST_INSERT_ID()";
-        $stmt = $conn->prepare($get_lastid_query);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $result = $conn->query($get_lastid_query);
+
         $result = $result->fetch_assoc();
         $projid = $result['LAST_INSERT_ID()'];
         // $_SESSION['pid'] = $result;
         // header('location:../main/new.php');
         // exit();
-        if(!$stmt->execute()){
+
+
+        if(!$insertresult){
             $_SESSION['insert-proj-error']="Database error: Failed to complete transaction: create new project";
             header('location:../main/addproject.php');
             exit();
         }
-        $stmt->close();
 
         $skills = $_POST['skillset'];
         $str_arr=explode(",", $skills);
@@ -62,22 +63,16 @@
             $temp = trim($str_arr[$i]);
 
             if($temp!==''||$temp!==' '){
-                $stmt = $conn->prepare($get_skillid_query);
-
-                $stmt->bind_param('s',$temp);
-                $stmt->execute();   
+                $tparams = array($temp);  
         
-                $result = $stmt->get_result(); 
+                $result = $conn->query($get_skillid_query); 
 
                 $skill = $result->fetch_assoc();
                 $skillid = $skill['id'];
 
-                $insertsql = $conn->prepare($projectskill_insert_query);
-                $insertsql->bind_param('ii',$projid,$skillid);
-                $insertsql->execute();
-                
-                $stmt->close();
-                $insertsql->close();
+                $insertsqlparams = array($projid,$skillid);
+
+                $insertsql = $conn->query($projectskill_insert_query,$insertsqlparams);
             }
         }
         header('location:../main/index.php');

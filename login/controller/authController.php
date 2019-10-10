@@ -8,8 +8,11 @@
         header("location: ../index.php"); 
     }
 
-    require '../config/db.php';
-    //require_once 'emailController.php';
+    require_once '../config/db.php';
+
+    $conn = new DatabaseConnection();
+
+    //require_once 'emailController.php'
 
     $errors = array();
     $username = "";
@@ -50,12 +53,12 @@
         // No other user has the same email!
 
         $emailQuery = "SELECT * FROM users WHERE email = ? LIMIT 1";
-        $stmt = $conn->prepare($emailQuery);
-        $stmt->bind_param('s',$email);
-        $stmt->execute(); 
-        $result = $stmt->get_result();  
+        $params = array($email);
+        // $stmt = $conn->prepare($emailQuery);
+        // $stmt->bind_param('s',$email);
+        // $stmt->execute(); 
+        $result = $conn->query($emailQuery,$params); 
         $userCount = $result->num_rows;
-        $stmt->close();
 
         if($userCount === 1)
         {
@@ -73,24 +76,18 @@
             $verified = false;
 
             $sql = "INSERT INTO users (USERNAME,EMAIL,VERIFIED,TOKEN,PASSWORD) VALUES(?,?,?,?,?)";
+            $paramsinsert = array($username,$email,$verified,$token,$password);
+            
+            // $stmt = $conn->prepare($sql);
+            // $stmt->bind_param('ssbss',$username,$email,$verified,$token,$password);
 
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssbss',$username,$email,$verified,$token,$password);
-            if($stmt->execute()){
+            $resultnew = $conn->query($sql,$paramsinsert);
+            if(!empty($resultnew)){
                 // login user => putting some values inside a session; session variables are accessible across pages.
 
-                $user_id = $conn->insert_id;
-                $_SESSION['id'] = $user_id;
-                $_SESSION['username'] = $username;
-                $_SESSION['email'] = $email;
-                $_SESSION['verified'] = $verified;
-                //set flash message
-
-                //sendVerificationEmail($email,$token);
-
-                $_SESSION['message'] = "You are now logged in!";
-                $_SESSION['alert-class'] = "alert-success"; 
-                header('location: index.php');
+                // $user_id = $conn->insert_id;
+                // $_SESSION['id'] = $user_id;
+                header('location: ../login/login.php');
                 exit();
             } else{
                 $errors['db_error'] = "Database error: Failed to complete transaction: register user";
@@ -117,11 +114,10 @@
         if(count($errors)===0){
             $sql = "SELECT * FROM users WHERE email=? OR username = ? LIMIT 1";
 
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ss',$usernameemail,$usernameemail);
-            $stmt->execute(); 
+            $paramsselect = array($usernameemail,$usernameemail);
 
-            $result = $stmt->get_result();  
+            $result = $conn->query($sql,$paramsselect);
+
             $user = $result->fetch_assoc();
 
             if($password===$user['password']){
@@ -155,24 +151,24 @@
         exit();
     }
  
-    function verifyUser($token){
-        global $conn; 
-        $sql = "SELECT * FROM users WHERE token = '$token' LIMIT 1";
-        $result = mysqli_query($conn,$sql);
+    // function verifyUser($token){
+    //     global $conn; 
+    //     $sql = "SELECT * FROM users WHERE token = '$token' LIMIT 1";
+    //     $result = mysqli_query($conn,$sql);
 
-        if($result->num_rows>0){
-            $user = $result->fetch_assoc();
-            $update_query = "UPDATE users SET verified = 1 WHERE token = '$token'";
+    //     if($result->num_rows>0){
+    //         $user = $result->fetch_assoc();
+    //         $update_query = "UPDATE users SET verified = 1 WHERE token = '$token'";
 
-            if(mysqli_query($conn,$update_query)){
-                // log user in
-                $_SESSION['verified'] = $user['verified'];
-                $_SESSION['message'] = "Your email was succesfully verified";
-                header('location: index.php');
-                exit();
-            }else{
-                echo 'User not found';  
-            }
-        }
-    }
+    //         if(mysqli_query($conn,$update_query)){
+    //             // log user in
+    //             $_SESSION['verified'] = $user['verified'];
+    //             $_SESSION['message'] = "Your email was succesfully verified";
+    //             header('location: index.php');
+    //             exit();
+    //         }else{
+    //             echo 'User not found';  
+    //         }
+    //     }
+    // }
 ?>
