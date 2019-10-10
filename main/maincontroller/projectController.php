@@ -21,8 +21,6 @@
         array_push($_SESSION['projdesc'],$res['proj_desc']);
     }
 
-    $stmt->close();
-
     if(isset($_POST['addproject-btn'])){
         $projectname = $_POST['projname'];
         $projectdesc = $_POST['projdesc'];
@@ -65,7 +63,7 @@
             if($temp!==''||$temp!==' '){
                 $tparams = array($temp);  
         
-                $result = $conn->query($get_skillid_query); 
+                $result = $conn->query($get_skillid_query,$tparams); 
 
                 $skill = $result->fetch_assoc();
                 $skillid = $skill['id'];

@@ -20,27 +20,34 @@
 
     //if user clicks on the sign up button
 
+    require_once '../classes/User.php';
+    
     if(isset($_POST['signup-btn'])){
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        // $username = $_POST['username'];
+        // $email = $_POST['email'];
+        // $password = $_POST['password'];
+
         $passwordc = $_POST['passwordc'];
+        $token = bin2hex(random_bytes(50)); //string of size 100
+        $verified = false;
+
+        $newuser = new User($_POST['username'],$_POST['email'],$_POST['password'],$token,$verified);
 
         // server side validation
 
-        if(empty($username))
+        if(empty($newuser->getUsername()))
         {
             $errors['username'] = "Username required";
         }
-        if(!filter_var($email,FILTER_VALIDATE_EMAIL))
+        if(!filter_var($newuser->getEmail(),FILTER_VALIDATE_EMAIL))
         {
             $errors['email'] = "Email address invalid!";
         }
-        if(empty($email))
+        if(empty($newuser->getEmail()))
         {
             $errors['email'] = "Email required";
         }
-        if(empty($password))
+        if(empty($newuser->getPassword()))
         {
             $errors['password'] = "Password required";
         }
@@ -53,10 +60,8 @@
         // No other user has the same email!
 
         $emailQuery = "SELECT * FROM users WHERE email = ? LIMIT 1";
-        $params = array($email);
-        // $stmt = $conn->prepare($emailQuery);
-        // $stmt->bind_param('s',$email);
-        // $stmt->execute(); 
+        $params = array($newuser->getEmail());
+    
         $result = $conn->query($emailQuery,$params); 
         $userCount = $result->num_rows;
 
@@ -72,11 +77,9 @@
             // 2. generating token    
 
             // $password = password_hash($password,PASSWORD_DEFAULT);
-            $token = bin2hex(random_bytes(50)); //string of size 100
-            $verified = false;
 
             $sql = "INSERT INTO users (USERNAME,EMAIL,VERIFIED,TOKEN,PASSWORD) VALUES(?,?,?,?,?)";
-            $paramsinsert = array($username,$email,$verified,$token,$password);
+            $paramsinsert = array($newuser->getUsername(),$newuser->getEmail(),$newuser->getVerificationStatus(),$newuser->getToken(),$newuser->getPassword());
             
             // $stmt = $conn->prepare($sql);
             // $stmt->bind_param('ssbss',$username,$email,$verified,$token,$password);
