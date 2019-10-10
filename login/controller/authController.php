@@ -79,18 +79,9 @@
             if($stmt->execute()){
                 // login user => putting some values inside a session; session variables are accessible across pages.
 
-                $user_id = $conn->insert_id;
-                $_SESSION['id'] = $user_id;
-                $_SESSION['username'] = $username;
-                $_SESSION['email'] = $email;
-                $_SESSION['verified'] = $verified;
-                //set flash message
-
-                //sendVerificationEmail($email,$token);
-
-                $_SESSION['message'] = "You are now logged in!";
-                $_SESSION['alert-class'] = "alert-success"; 
-                header('location: index.php');
+                // $user_id = $conn->insert_id;
+                // $_SESSION['id'] = $user_id;
+                header('location: ../index.php');
                 exit();
             } else{
                 $errors['db_error'] = "Database error: Failed to complete transaction: register user";

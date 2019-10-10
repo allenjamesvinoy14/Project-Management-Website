@@ -113,9 +113,11 @@
     //     $stmt->close();
     // }
     if(isset($_GET['myprojects'])){
-        $get_my_project_query = "SELECT * FROM projectmembers INNER JOIN projects ON projlead_id = user_id WHERE accepted = 1";
+        $get_my_project_query = "SELECT * FROM projectmembers INNER JOIN projects USING(proj_id) WHERE accepted = 1 AND user_id=?";
 
         $stmt = $conn->prepare($get_my_project_query);
+        $stmt->bind_param('i',$_SESSION['id']);
+        
         if($stmt->execute()){
             $resultmyproj = $stmt->get_result();
 
@@ -143,5 +145,37 @@
                 array_push($_SESSION['projlead_id'],$resmp['projlead_id']);
             }
         }
+        $stmt->close();
+    }
+
+    if(isset($_GET['review'])){
+        $projectid = $_GET['id'];
+        $_SESSION['requests-projid'] = $projectid;
+        
+        $get_requests_query = "SELECT user_id,username,email FROM projectmembers INNER JOIN users as u ON user_id = u.id WHERE accepted = 0 AND proj_id=?";
+
+        $stmt = $conn->prepare($get_requests_query);
+        $stmt->bind_param('i',$projectid);
+
+        if($stmt->execute()){
+            $resultrequests = $stmt->get_result();
+
+            $count = $resultrequests->num_rows;
+            $_SESSION['requestcount'] = $count;
+
+            //CHANGE THIS TO THE SCHEMA OF THE JOIN RESULT
+
+            $_SESSION['requests-user_id'] = array();
+            $_SESSION['requests-username'] = array();
+            $_SESSION['requests-email'] = array();
+
+
+            foreach($resultrequests as $resmp){
+                array_push($_SESSION['requests-user_id'],$resmp['user_id']);
+                array_push($_SESSION['requests-username'],$resmp['username']);
+                array_push($_SESSION['requests-email'],$resmp['email']);
+            }
+        }
+        $stmt->close();
     }
 ?>
