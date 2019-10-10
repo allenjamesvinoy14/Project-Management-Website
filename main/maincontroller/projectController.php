@@ -2,6 +2,7 @@
     require '../config/db.php'; 
     require '../login/controller/authController.php';
     require_once '../classes/Project.php';
+    require_once '../classes/User.php';
     require_once '../classes/Skill.php';
 
     $emailQuery = "SELECT * FROM projects";
@@ -34,8 +35,8 @@
 
     //if new project is added
     if(isset($_POST['addproject-btn'])){
-
-        $newproject = new Project($_POST['projname'],$_POST['projdesc'],$_SESSION['cur-user']->getUserId());
+        $user = $_SESSION['cur-user'];
+        $newproject = new Project($_POST['projname'],$_POST['projdesc'],$user->getUserId()); 
 
         //adding project to the database.
         $insertquery = "INSERT INTO projects (PROJ_NAME,PROJ_DESC,PROJLEAD_ID) VALUES(?,?,?)";
@@ -58,7 +59,7 @@
 
 
         // adding skills data to the projectskills table. A seperate table is maintained to ensure 3NF.
-        
+
         $skills = $_POST['skillset'];
         $str_arr=explode(",", $skills);
         
@@ -86,5 +87,43 @@
         }
         header('location:../main/index.php');
         exit();
+    }
+
+    if(isset($_GET['myprojects'])){
+        $get_my_project_query = "SELECT * FROM projectmembers INNER JOIN projects USING(proj_id) WHERE accepted = 1 AND user_id=?";
+        $get_project_params = array($_SESSION['cur-user']->getUserId());
+
+        $resultmyproj = $conn->query($get_my_project_query,$get_project_params);
+
+        if(!empty($resultmyproj)){
+
+            $count = $resultmyproj->num_rows;
+
+            $_SESSION['myprojcount'] = $count;
+            // $_SESSION['myprojects'] = array();
+
+            // $_SESSION['myprojid'] = array();
+            // $_SESSION['proj_id'] = array();
+            // $_SESSION['userid'] = array();
+            // $_SESSION['accepted'] = array();
+            // $_SESSION['proj_name'] = array();
+            // $_SESSION['proj_desc'] = array();
+            // $_SESSION['projlead_id'] = array();
+
+            foreach($resultmyproj as $resmp){
+                $proj = new Project($resmp['proj_name'],$resmp['proj_desc'],$resmp['projlead_id']);
+                $proj->setAcceptanceStatus($resmp['accepted']);
+                $proj->setProjectId($resmp['id']);
+
+                $_SESSION['cur-user']->addProject($proj);
+                // array_push($_SESSION['myprojid'],$resmp['id']);
+                // array_push($_SESSION['proj_id'],$resmp['proj_id']);
+                // array_push($_SESSION['userid'],$resmp['user_id']);
+                // array_push($_SESSION['accepted'],$resmp['accepted']);
+                // array_push($_SESSION['proj_name'],$resmp['proj_name']);
+                // array_push($_SESSION['proj_desc'],$resmp['proj_desc']);
+                // array_push($_SESSION['projlead_id'],$resmp['projlead_id']);
+            }
+        }
     }
 ?>

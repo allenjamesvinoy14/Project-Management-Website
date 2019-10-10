@@ -10,18 +10,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylemain.css">
     <link rel="stylesheet" href="../style.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <title>ProJ</title>
 
     <script>
-        $(function(){
-            $(".requestbtn").on('click',function(){
-                window.location.replace('../main/test.php');
-            });
-        });
     </script>
 </head>
 <body>
-<div class="header">
+    <div class="header">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="../main/index.php">ProJ</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +28,7 @@
                 <div class="mr-auto"></div>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
+                        <a class="nav-link" href="../main/myprojects.php">My Projects</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../main/addproject.php">Add Project</a>
@@ -43,43 +40,31 @@
             </div>
         </nav>
     </div>
-    <?php for($i=0;$i<$_SESSION['projcount'];$i++): ?>
+    <?php for($i=0;$i<$_SESSION['myprojcount'];$i++): ?>
+    <?php if($_SESSION['accepted'][$i] == 1 and $_SESSION['userid'][$i]==$_SESSION['id']): ?>
     <div class="main">
             <div class="col-md-8 offset-md-2 justify-content-center projitems">
                 <div class="row col-md-8 offset-md-3 col1 center-block">
                     <table>
                         <tr>
-                            <td>Project Name:</td> <td><?php echo $_SESSION['projects'][$i]->getProjectName(); ?></td>
+                            <td>Project Name:</td> <td><?php echo $_SESSION['proj_name'][$i]; ?></td>
                         </tr>
                         <tr>
-                            <td>Project Description:</td> <td><?php echo $_SESSION['projects'][$i]->getProjectDesc(); ?></td>
-                        </tr> 
-                        <tr>
-                            <td>Skills: </td> 
-                            <td>
-                                <?php
-                                    $c = 0;
-                                    $skills = $_SESSION['projects'][$i]->getSkills();
-                                    foreach($skills as $s)
-                                    {
-                                        echo $s->getSkillName();
-                                        $c++;
-                                        if($c!=count($skills))
-                                            echo ",";
-                                    }
-                                ?> 
-                            </td>
+                            <td>Project Description:</td> <td><?php echo $_SESSION['proj_desc'][$i]; ?></td>
                         </tr>  
                     </table>
                 </div>
                 <br>
+                <?php if($_SESSION['projlead_id'][$i] === $_SESSION['id']): ?>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
-                    <button type="submit" name=<?php echo $_SESSION['projects'][$i]->getProjectId()?> class="requestbtn btn btn-primary btn-block btn-lg">
-                        REQUEST TO JOIN
+                    <button type="submit" id=<?php echo $_SESSION['proj_id'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
+                        REVIEW REQUESTS
                     </button> 
                 </div>
+                <?php endif; ?>
             </div>
     </div>
+    <?php endif; ?>
     <?php endfor; ?>
 </body>
 </html>

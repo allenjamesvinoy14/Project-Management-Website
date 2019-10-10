@@ -7,7 +7,9 @@
         private $token;
         private $verified;
 
-        function __construct($username,$email,$password,$token,$verified)
+        private $projects = array();
+
+        public function __construct($username,$email,$password,$token,$verified)
         {
             $this->username = $username;
             $this->email = $email;
@@ -15,48 +17,55 @@
             $this->token = $token;
             $this->verified = $verified;
         }
-        function setUserId($userid)
+        public function setUserId($userid)
         {
             $this->userid = $userid;
         }
-        function setUsername($username)
+        public function setUsername($username)
         {
             $this->username = $username;
         }
-        function setEmail($email)
+        public function setEmail($email)
         {
             $this->email = $email;
         }
-        function setPassword($password)
+        public function setPassword($password)
         {
             $this->password = $password;
         }
-        function setVerified($verified)
+        public function setVerified($verified)
         {
             $this->verified = $verified;
         }
-        function getUsername()
+        public function addProject($newproject){
+            array_push($this->projects,$newproject);
+        }
+
+        public function getUsername()
         {
             return $this->username;
         }
-        function getEmail()
+        public function getEmail()
         {
             return $this->email;
         }
-        function getPassword()
+        public function getPassword()
         {
             return $this->password;
         }
-        function getToken()
+        public function getToken()
         {
             return $this->token;
         }
-        function getVerificationStatus()
+        public function getVerificationStatus()
         {
             return $this->verified;
         }
-        function getUserId(){
+        public function getUserId(){
             return $this->userid;
+        }
+        public function getProjects(){
+            return $this->projects;
         }
     }
 ?>

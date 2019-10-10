@@ -4,6 +4,7 @@
         private $proj_name;
         private $proj_desc;
         private $proj_lead;
+        private $accepted;
         private $skills = array();
 
         public function __construct($proj_name,$proj_desc,$proj_lead){
@@ -37,7 +38,9 @@
         public function setProjectLeadDetails($proj_lead){
             $this->proj_lead= $proj_lead;
         }
-
+        public function setAcceptanceStatus($status){
+            $accepted = $status;
+        }
 
         public function addSkill($newskill){
             array_push($this->skills,$newskill);

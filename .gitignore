@@ -1,2 +1,5 @@
 /vendor
-login/config/constants.php
+/config/constants.php
+/main/test.php
+/main/test.html
+/user-verification.sql
