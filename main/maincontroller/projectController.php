@@ -1,9 +1,9 @@
 <?php
     require '../config/db.php'; 
     require '../login/controller/authController.php';
-    require_once '../classes/Project.php';
-    require_once '../classes/User.php';
-    require_once '../classes/Skill.php';
+    // require_once '../classes/Project.php';
+    // require_once '../classes/User.php';
+    // require_once '../classes/Skill.php';
 
     $emailQuery = "SELECT * FROM projects";
 
@@ -35,8 +35,9 @@
 
     //if new project is added
     if(isset($_POST['addproject-btn'])){
-        $user = $_SESSION['cur-user'];
+        $user = unserialize($_SESSION['cur-user']);
         $newproject = new Project($_POST['projname'],$_POST['projdesc'],$user->getUserId()); 
+        $newproject->setAcceptanceStatus(1); //since the project lead will definitely be part of the project
 
         //adding project to the database.
         $insertquery = "INSERT INTO projects (PROJ_NAME,PROJ_DESC,PROJLEAD_ID) VALUES(?,?,?)";
@@ -85,13 +86,22 @@
                 $insertsql = $conn->query($projectskill_insert_query,$insertsqlparams);
             }
         }
+
+        $user->addProject($newproject); // adding the project created to the project list of the user.
+
+        $_SESSION['cur-user'] = serialize($user);
+
         header('location:../main/index.php');
         exit();
     }
 
     if(isset($_GET['myprojects'])){
+        
+        $user = unserialize($_SESSION['cur-user']);
+
+
         $get_my_project_query = "SELECT * FROM projectmembers INNER JOIN projects USING(proj_id) WHERE accepted = 1 AND user_id=?";
-        $get_project_params = array($_SESSION['cur-user']->getUserId());
+        $get_project_params = array($user->getUserId());
 
         $resultmyproj = $conn->query($get_my_project_query,$get_project_params);
 
@@ -115,7 +125,7 @@
                 $proj->setAcceptanceStatus($resmp['accepted']);
                 $proj->setProjectId($resmp['id']);
 
-                $_SESSION['cur-user']->addProject($proj);
+                $user->addProject($proj);
                 // array_push($_SESSION['myprojid'],$resmp['id']);
                 // array_push($_SESSION['proj_id'],$resmp['proj_id']);
                 // array_push($_SESSION['userid'],$resmp['user_id']);
@@ -124,6 +134,8 @@
                 // array_push($_SESSION['proj_desc'],$resmp['proj_desc']);
                 // array_push($_SESSION['projlead_id'],$resmp['projlead_id']);
             }
+
+            $_SESSION['cur-user'] = serialize($user);
         }
     }
 ?>

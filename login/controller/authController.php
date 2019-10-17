@@ -21,6 +21,8 @@
     //if user clicks on the sign up button
 
     require_once '../classes/User.php';
+    require_once '../classes/Project.php';
+    require_once '../classes/Skill.php';
     
     if(isset($_POST['signup-btn'])){
         // $username = $_POST['username'];
@@ -130,7 +132,7 @@
                 $loginuser->setUserId($user['id']);
 
                 //current user object is saved in the session.
-                $_SESSION['cur-user'] = $loginuser;
+                $_SESSION['cur-user'] = serialize($loginuser);
 
                 //set flash message
                 $_SESSION['message'] = "You are now logged in!";

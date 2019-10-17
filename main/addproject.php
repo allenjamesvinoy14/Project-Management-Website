@@ -53,6 +53,16 @@
     </script>
 </head>
 <body>
+
+    <?php require '../UI/navbar/navbarheader.php'; ?>
+        <li class="nav-item">
+            <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+        </li>
+    <?php require '../UI/navbar/navbarfooter.php'; ?>
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2 form-div">

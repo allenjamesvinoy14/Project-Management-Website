@@ -13,6 +13,7 @@
             $this->proj_lead = $proj_lead;
         }
 
+        //getters
         public function getProjectId(){
             return $this->projid;
         }
@@ -25,7 +26,14 @@
         public function getProjectLeadDetails(){
             return $this->proj_lead;
         }
+        public function getAcceptanceStatus(){
+            return $this->accepted;
+        }
+        public function getSkills(){
+            return $this->skills;
+        }
 
+        //setters
         public function setProjectId($projid){
             $this->projid = $projid;
         }
@@ -41,13 +49,8 @@
         public function setAcceptanceStatus($status){
             $accepted = $status;
         }
-
         public function addSkill($newskill){
             array_push($this->skills,$newskill);
-        }
-
-        public function getSkills(){
-            return $this->skills;
         }
     }
 ?>

@@ -1,4 +1,5 @@
 <?php
-    require '../login/controller/authController.php';
-    echo "welcome";
+    require '../main/maincontroller/projectController.php';
+    $testvar = $_SESSION['test1'];
+    echo $testvar;
 ?>

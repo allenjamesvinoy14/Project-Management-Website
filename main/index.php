@@ -21,28 +21,19 @@
     </script>
 </head>
 <body>
-<div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="../main/index.php">ProJ</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="mr-auto"></div>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../main/addproject.php">Add Project</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+
+    <?php require '../UI/navbar/navbarheader.php'; ?>
+        <li class="nav-item">
+            <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../main/addproject.php">Add Project</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+        </li>
+    <?php require '../UI/navbar/navbarfooter.php'; ?>
+
     <?php for($i=0;$i<$_SESSION['projcount'];$i++): ?>
     <div class="main">
             <div class="col-md-8 offset-md-2 justify-content-center projitems">
@@ -74,8 +65,13 @@
                 </div>
                 <br>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
-                    <button type="submit" name=<?php echo $_SESSION['projects'][$i]->getProjectId()?> class="requestbtn btn btn-primary btn-block btn-lg">
-                        REQUEST TO JOIN
+                    <button type="submit" name=
+                        <?php 
+                            $proj = unserialize($_SESSION['projects'][$i]);
+                            echo proj->getProjectId();
+                        ?> 
+                        class="requestbtn btn btn-primary btn-block btn-lg">
+                            REQUEST TO JOIN
                     </button> 
                 </div>
             </div>
