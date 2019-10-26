@@ -70,11 +70,13 @@
                     </table>
                 </div>
                 <br>
+                <?php if($_SESSION['display-request'][$i]==0): ?>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
                     <button type="submit" id=<?php echo $_SESSION['projid'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
                         REQUEST TO JOIN
                     </button> 
                 </div>
+                <?php endif; ?>
             </div>
     </div>
     <?php endfor; ?>

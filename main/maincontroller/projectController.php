@@ -2,17 +2,20 @@
     require '../config/db.php';
     require '../login/controller/authController.php';
 
-    $Query = "SELECT * FROM projects";
-    $stmt = $conn->prepare($Query);
+    $all_projects_fetch_query = "SELECT * FROM projects";
+    $stmt = $conn->prepare($all_projects_fetch_query);
     $stmt->execute(); 
 
     $result = $stmt->get_result();  
+    $stmt->close();
+
     $count = $result->num_rows;
     $_SESSION['projcount'] = $count;
 
     $_SESSION['projid'] = array();
     $_SESSION['projname'] = array();
     $_SESSION['projdesc'] = array();
+    $_SESSION['display-request'] = array();
 
     foreach($result as $res){
         array_push($_SESSION['projid'],$res['proj_id']);
@@ -20,7 +23,25 @@
         array_push($_SESSION['projdesc'],$res['proj_desc']);
     }
 
-    $stmt->close();
+    for($i=0;$i<$count;$i++){
+        $cur = $_SESSION['projid'][$i];
+
+        $check_member_of_project_query = "SELECT * FROM projects INNER JOIN projectmembers USING(proj_id) WHERE proj_id=? AND user_id=?";
+        $stmt = $conn->prepare($check_member_of_project_query);
+        $stmt->bind_param('ii',$cur,$_SESSION['id']);
+        $stmt->execute();
+
+        $list = $stmt->get_result();
+        $stmt->close();
+
+        $temp = 0;
+        if($list->num_rows==1)
+        {
+            $temp=1;
+        }
+
+        array_push($_SESSION['display-request'],$temp);
+    }
 
     if(isset($_POST['addproject-btn'])){
         $projectname = $_POST['projname'];
