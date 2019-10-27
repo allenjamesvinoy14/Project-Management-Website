@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -21,35 +22,42 @@
                 window.location = "../main/reviewrequests.php?id="+str+"&review=1";
             });
         });
+        
+        $(function(){
+            $(".projitems").on('click',function(){
+                window.location = "../main/test.php";
+            });
+        });
+
+        function changecolor(t){
+            t.style.background = "#89ABE3FF";
+            t.style.transition = "0.5s";
+            t.style.cursor = "pointer";
+            t.style.color = "#333D79FF";
+        }
+
+        function colortodefault(t){
+            t.style.background = "#0063B2FF";
+            t.style.color = "white";
+        }
     </script>
+
 </head>
 <body>
-    <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="../main/index.php">ProJ</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="mr-auto"></div>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../main/myprojects.php">My Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../main/addproject.php">Add Project</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+
+    <?php require_once '../UI/navbar/navbar-header.php'; ?>
+        <li class="nav-item">
+            <a class="nav-link" href="../main/addproject.php">Add Project</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+        </li>
+    <?php require_once '../UI/navbar/navbar-footer.php'; ?>
+
     <?php for($i=0;$i<$_SESSION['myprojcount'];$i++): ?>
     <?php if($_SESSION['accepted'][$i] == 1 and $_SESSION['userid'][$i]==$_SESSION['id']): ?>
     <div class="main">
-            <div class="col-md-8 offset-md-2 justify-content-center projitems">
+            <div onmouseover="changecolor(this)" onmouseout="colortodefault(this)" class="col-md-8 offset-md-2 justify-content-center projitems">
                 <div class="row col-md-8 offset-md-3 col1 center-block">
                     <table>
                         <tr>
@@ -72,5 +80,6 @@
     </div>
     <?php endif; ?>
     <?php endfor; ?>
+    <?php require_once '../UI/Main Elements/footer.php'; ?>
 </body>
 </html>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <title>Register</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="stylemain.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -53,6 +54,15 @@
     </script>
 </head>
 <body>
+    <?php require_once '../UI/navbar/navbar-header.php'; ?>
+        <li class="nav-item">
+            <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+        </li>
+    <?php require_once '../UI/navbar/navbar-footer.php'; ?>
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2 form-div">
@@ -80,7 +90,7 @@
                         <input id = "skills" name="skillset" size = "50" class="form-control form-control-lg">
                     </div>
                     <div class="form-group">
-                        <button type="submit" name="addproject-btn" class="btn btn-primary btn-block btn-lg">
+                        <button type="submit" name="addproject-btn" class="btn btn-primary btn-block btn-lg addbutton">
                             ADD YOUR PROJECT
                         </button>
                     </div>
@@ -88,5 +98,6 @@
             </div>
         </div>
     </div>
+    <?php require_once '../UI/Main Elements/footer.php'; ?>
 </body>
 </html>

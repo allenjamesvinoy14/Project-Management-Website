@@ -1,0 +1,41 @@
+.member{    
+    position: relative;
+    font-size: 1.5em;
+}
+.member i{
+    position: absolute;
+    left:0;
+    top:8px;
+    padding: 10;
+}
+.username{
+    padding-left:10px;
+    margin-left: 20px;
+}
+.desc{
+    font-size: 1.7em;
+}
+.btn-primary{
+    background-color: #0063B2FF !important;
+}
+footer{
+    background-color:#333D79FF;
+    color:white;
+    overflow-y: hidden;
+}
+.navbar{
+    background-color: #0063B2FF !important;
+    height: 100px !important;
+    font-size: 1.2em !important;
+}
+a{
+    color: white !important;
+}
+a:hover{
+    background-color: white !important;
+    color: #0063B2FF !important;
+}
+.navbar-brand{
+    font-size: 1.5em;
+    color: white !important;
+}

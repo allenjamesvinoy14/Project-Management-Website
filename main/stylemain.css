@@ -1,7 +1,10 @@
 .projitems{
-    background-color: aqua;
+    background-color: #0063B2FF;
     padding-top:10px;
     padding-bottom: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: white;
 }
 .main{
     margin: 50px auto 50px;
@@ -11,3 +14,35 @@
     font-size: 1.1em;
     font-family: 'Lora',serif;
 }
+.btn{
+    background-color: #333D79FF !important;
+}
+.navbar{
+    background-color: #0063B2FF !important;
+    height: 100px !important;
+    font-size: 1.2em !important;
+}
+a{
+    color: white !important;
+}
+a:hover{
+    background-color: white !important;
+    color: #0063B2FF !important;
+}
+.navbar-brand{
+    font-size: 1.5em;
+    color: white !important;
+}
+.addbutton{
+    background-color: #0063B2FF !important;
+}
+.hide{
+    visibility: hidden;
+}
+footer{
+    background-color:#333D79FF;
+    color:white;
+    overflow-y: hidden;
+}
+
+
