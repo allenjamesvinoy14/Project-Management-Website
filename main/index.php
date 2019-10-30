@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylemain.css">
     <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/2462b6baab.js" crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <title>ProJ</title>
@@ -33,8 +34,9 @@
         });
 
         $(function(){
-            $(".projitems").on('click',function(){
+            $(".projitems").on('click',function(e){
                 curid = this.id;
+                e.stopPropagation();
                 window.location = "../main/viewproject.php?projid="+curid;
             });
         });
@@ -67,18 +69,34 @@
         </li>
     <?php require_once '../UI/navbar/navbar-footer.php'; ?>
 
+    <div class="containter">
+        <div class="row">
+            <div class="col center-block heading">
+                <h3> Ongoing Projects! </h3>
+            </div>
+        </div>
+    </div>
     <?php for($i=0;$i<$_SESSION['projcount'];$i++): ?>
     <div class="main">
             <div id=<?php echo $_SESSION['projid'][$i]?> onmouseover="changecolor(this)" onmouseout="colortodefault(this)" class="col-md-8 offset-md-2 justify-content-center projitems">
-                <div class="row col-md-8 offset-md-3 col1 center-block">
+                <div class="row col-md-8 offset-md-2 col1 center-block projitem">
                     <table>
                         <tr>
                             <td>Project Name:</td> <td><?php echo $_SESSION['projname'][$i]; ?></td>
                         </tr>
                         <tr>
-                            <td>Project Description:</td> <td><?php echo $_SESSION['projdesc'][$i]; ?></td>
+                            <td>Project Description:</td> <td class = "description"><?php echo $_SESSION['projdesc'][$i]; ?></td>
                         </tr>  
                     </table>
+                </div>
+                <div class="skills">
+                    <div class="row row col-md-8 offset-md-2 ">
+                        <?php 
+                            $key = $_SESSION['projid'][$i]."skills";
+                            foreach($_SESSION[$key] as $skill): ?>
+                                <button class="btn btn-default skillitems"><?php echo $skill; ?></button>
+                        <?php endforeach; ?>                                              
+                    </div>
                 </div>
                 <br>
                 <?php if($_SESSION['display-request'][$i]==0): ?>

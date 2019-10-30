@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/2462b6baab.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="stylemain.css">
     <link rel="stylesheet" href="../style.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -23,11 +24,12 @@
             });
         });
         
-        $(function(){
-            $(".projitems").on('click',function(){
-                window.location = "../main/test.php";
-            });
-        });
+        // $(function(){
+        //     $(".projitems").on('click',function(e){
+        //         e.stopPropagation();
+        //         window.location = "../main/test.php";
+        //     });
+        // });
 
         function changecolor(t){
             t.style.background = "#89ABE3FF";
@@ -54,11 +56,18 @@
         </li>
     <?php require_once '../UI/navbar/navbar-footer.php'; ?>
 
+    <div class="containter">
+        <div class="row">
+            <div class="col center-block heading">
+                <h3> My Projects! </h3>
+            </div>
+        </div>
+    </div>
     <?php for($i=0;$i<$_SESSION['myprojcount'];$i++): ?>
     <?php if($_SESSION['accepted'][$i] == 1 and $_SESSION['userid'][$i]==$_SESSION['id']): ?>
     <div class="main">
             <div onmouseover="changecolor(this)" onmouseout="colortodefault(this)" class="col-md-8 offset-md-2 justify-content-center projitems">
-                <div class="row col-md-8 offset-md-3 col1 center-block">
+                <div class="row col-md-8 offset-md-2 col1 center-block">
                     <table>
                         <tr>
                             <td>Project Name:</td> <td><?php echo $_SESSION['proj_name'][$i]; ?></td>
@@ -69,6 +78,15 @@
                     </table>
                 </div>
                 <br>
+                <div class="skills">
+                    <div class="row row col-md-8 offset-md-2 ">
+                        <?php 
+                            $key = $_SESSION['proj_id'][$i]."skills";
+                            foreach($_SESSION[$key] as $skill): ?>
+                                <button class="btn btn-default skillitems"><?php echo $skill; ?></button>
+                        <?php endforeach; ?>                                              
+                    </div>
+                </div>
                 <?php if($_SESSION['projlead_id'][$i] === $_SESSION['id']): ?>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
                     <button type="submit" id=<?php echo $_SESSION['proj_id'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">

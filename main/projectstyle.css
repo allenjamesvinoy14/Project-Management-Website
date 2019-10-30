@@ -39,3 +39,10 @@ a:hover{
     font-size: 1.5em;
     color: white !important;
 }
+.projectdetail{
+    position: relative;
+}
+.skillitems{
+    background-color: skyblue !important;
+    margin-right: 2px;
+}

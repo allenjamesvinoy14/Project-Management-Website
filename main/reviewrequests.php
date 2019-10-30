@@ -34,28 +34,24 @@
     </script>
 </head>
 <body>
-    <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="../main/index.php">ProJ</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="mr-auto"></div>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../main/myprojects.php">My Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../main/addproject.php">Add Project</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Logout</a>
-                    </li>
-                </ul>
+
+    <?php require_once '../UI/navbar/navbar-header.php'; ?>
+        <li class="nav-item">
+            <a class="nav-link" href="../main/myprojects.php">My Projects</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+        </li>
+    <?php require_once '../UI/navbar/navbar-footer.php'; ?>
+
+    <div class="containter">
+        <div class="row">
+            <div class="col center-block heading">
+                <h3> Requests! </h3>
             </div>
-        </nav>
+        </div>
     </div>
+
     <?php for($i=0;$i<$_SESSION['requestcount'];$i++): ?>
     <div class="main">
             <div class="col-md-8 offset-md-2 justify-content-center projitems">
@@ -72,8 +68,11 @@
                 <br>
                 <div class="row col-md-4 offset-md-8 col1 center-block">
                     <button type="submit" id=<?php echo $_SESSION['requests-user_id'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
-                        ACCEPT REQUEST
+                        ACCEPT
                     </button> 
+                    <button type="submit" id=<?php echo $_SESSION['requests-user_id'][$i]?> class="requestbtn btn btn-primary btn-block btn-lg">
+                        REJECT
+                    </button>
                 </div>
             </div>
     </div>

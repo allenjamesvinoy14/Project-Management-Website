@@ -3,10 +3,8 @@
       <div class="row text-left">
         <div class="col-md-10 col-12">
           <h1 class="text">About Us</h1>
-          <p class="text-muted">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos quo rem accusantium error id nulla
-            harum exercitationem obcaecati. Totam incidunt quos doloremque laudantium, iste tempora consequatur sint
-            recusandae hic commodi.
+          <p class="text-muted" style = "color: white !important;">
+            Pasionate, Driven and Perseverent!
           </p>
         </div>
         <!-- <div class="col-md-5 col-12">

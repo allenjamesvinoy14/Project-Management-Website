@@ -43,6 +43,26 @@
         array_push($_SESSION['display-request'],$temp);
     }
 
+    $get_skills_query = "SELECT skillname FROM projectskills as ps INNER JOIN skills as s ON ps.skillid = s.id WHERE projectid = ?";
+
+    for($i=0;$i<$count;$i++){
+        $cur = $_SESSION['projid'][$i];
+        $key = $cur."skills";
+
+        $_SESSION[$key] = array();
+        
+        $stmt = $conn->prepare($get_skills_query);
+        $stmt->bind_param('i',$cur);
+        $stmt->execute();
+
+        $list = $stmt->get_result();
+        $stmt->close();
+
+        foreach($list as $item){
+            array_push($_SESSION[$key],$item['skillname']);
+        }
+    }
+
     if(isset($_POST['addproject-btn'])){
         $projectname = $_POST['projname'];
         $projectdesc = $_POST['projdesc'];
@@ -198,5 +218,37 @@
             }
         }
         $stmt->close();
+    }
+
+    if(isset($_GET['projid'])){
+        $id = $_GET['projid'];
+
+        $idx = -1;
+        for($i=0;$i<$count;$i++){
+            if($_SESSION['projid'][$i] == $id){
+                $idx = $i;    
+            }
+        }
+
+        $_SESSION['display-project-name'] = $_SESSION['projname'][$idx];
+        $_SESSION['display-project-desc'] = $_SESSION['projdesc'][$idx];
+        $_SESSION['display-project-id'] = $id;
+
+        $find_users_query = "SELECT username FROM projectmembers as pm INNER JOIN users as u ON pm.user_id = u.id WHERE pm.proj_id = ? AND accepted = 1";
+        $stmt = $conn->prepare($find_users_query);
+        $stmt->bind_param('i',$id);
+        $stmt->execute();
+
+        $usernames = $stmt->get_result();
+        $membercount = $usernames->num_rows;
+
+        $stmt->close();
+        
+        $_SESSION['usernames'] = array();
+        $_SESSION['membercount'] = $membercount;
+
+        foreach($usernames as $u){
+            array_push($_SESSION['usernames'],$u['username']);
+        }
     }
 ?>

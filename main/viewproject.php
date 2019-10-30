@@ -1,4 +1,5 @@
 <?php
+    require 'maincontroller/projectController.php';
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +37,7 @@
     </style>
 </head>     
 <body>
+    
     <?php require_once '../UI/navbar/navbar-header.php'; ?>
         <li class="nav-item">
             <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
@@ -50,33 +52,35 @@
 
     <div class="container-fluid">
         <div class="page-header pt-4 pl-3">
-            <h1>Project Title</h1>
+            <h1><?php echo $_SESSION['display-project-name']; ?></h1>
         </div>
     </div>
     <div class="container-fluid">
         <div class="row pt-4">
-            <div class="col-md-8">
+            <div class="col-md-8 projectdetail">
                 <div class="jumbotron desc" style = "height: 450px">
                     <h2 class="mb-3">Project Description</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, fugit. In tempore atque error! Consequuntur sint, neque recusandae ad enim officia. Omnis fugit officiis nam dolorem sapiente iste laudantium eveniet.</p>
+                    <p><?php echo $_SESSION['display-project-desc']; ?></p>
+
+                    <div class="skills">
+                        <?php 
+                            $key = $_SESSION['display-project-id']."skills";
+                            foreach($_SESSION[$key] as $skill): ?>
+                                <button class="btn btn-default skillitems"><?php echo $skill; ?></button>
+                        <?php endforeach; ?> 
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="jumbotron" style = "height:330px;">
                 <h4 class="mb-3">Project Members</h4>
                     <div class="container member-list" style = " height:100%; overflow-y:scroll;">
+                    <?php for($i=0;$i<$_SESSION['membercount'];$i++): ?>
                         <div class="member">
                             <i class="fas fa-user"></i>
-                            <p class="username"> Allen James </p>
-                        </div>
-                        <div class="member">
-                            <i class="fas fa-user"></i>
-                            <p class="username"> Allen James </p>
-                        </div>
-                        <div class="member">
-                            <i class="fas fa-user"></i>
-                            <p class="username"> Allen James </p>
-                        </div>  
+                            <p class="username"> <?php echo $_SESSION['usernames'][$i]; ?></p>
+                        </div> 
+                    <?php endfor; ?>
                     </div>
                 </div>
                 <button class="btn btn-primary btn-lg">Send Message</button>

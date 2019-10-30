@@ -43,6 +43,26 @@ footer{
     background-color:#333D79FF;
     color:white;
     overflow-y: hidden;
+    height:165px;
+}
+.heading{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.description{
+    text-overflow: ellipsis;
+}
+body{
+    overflow-x: hidden;
+}
+.skillitems{
+    background-color: white !important;
+    color: #0063B2;
+    margin: 2px;
 }
 
 
