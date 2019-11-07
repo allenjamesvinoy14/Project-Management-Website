@@ -16,25 +16,32 @@
     <title>ProJ</title>
     <style>
     /* width */
-    ::-webkit-scrollbar {
-    width: 10px;
-    }
+        ::-webkit-scrollbar {
+        width: 10px;
+        }
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-    }
-    
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-    background: #888; 
-    }
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+        background: #888; 
+        }
 
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
     }
     </style>
+    <script>
+        $(function(){
+            $(".send").on('click',function(){
+                window.location = "../main/sendmessage.php";
+            });
+        });
+    </script>
 </head>     
 <body>
     
@@ -69,6 +76,8 @@
                                 <button class="btn btn-default skillitems"><?php echo $skill; ?></button>
                         <?php endforeach; ?> 
                     </div>
+                    <br> 
+                    <a style = "color:black !important;" href="https://github.com/allenjamesvinoy14/Project-Management-Website"> Code Link </a> 
                 </div>
             </div>
             <div class="col-md-4">
@@ -83,7 +92,7 @@
                     <?php endfor; ?>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-lg">Send Message</button>
+                <button class="btn btn-primary btn-lg send">Send Message</button>
             </div>
         </div>
     </div>

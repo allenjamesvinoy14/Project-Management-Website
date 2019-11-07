@@ -93,6 +93,11 @@
                         REVIEW REQUESTS
                     </button> 
                 </div>
+                <div class="row col-md-4 offset-md-8 col1 center-block">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        EDIT PROJECT
+                    </button> 
+                </div>
                 <?php endif; ?>
             </div>
     </div>

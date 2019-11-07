@@ -53,6 +53,11 @@ footer{
     margin-bottom: 0;
     padding-bottom: 0;
 }
+.nothead{
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 .description{
     text-overflow: ellipsis;
 }
@@ -64,5 +69,15 @@ body{
     color: #0063B2;
     margin: 2px;
 }
+.request{
+    background-color: #333D79 !important;
+}
+.acceptance{
+    background-color: green !important;
+}
+.rejection{
+    background-color: red !important;
+}
+
 
 

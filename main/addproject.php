@@ -91,6 +91,14 @@
                         <input id = "skills" name="skillset" size = "50" class="form-control form-control-lg">
                     </div>
                     <div class="form-group">
+                        <label for="time">Time Period(in Days): </label>
+                        <input id = "time" name="timeperiod" size = "50" type="number" min ="1" class="form-control form-control-lg">
+                    </div>
+                    <div class="form-group">
+                        <label for="gitlink">Project Code Link </label>
+                        <input id = "gitlink" name="codelink" size = "50" type="link" class="form-control form-control-lg">
+                    </div>
+                    <div class="form-group">
                         <button type="submit" name="addproject-btn" class="btn btn-primary btn-block btn-lg addbutton">
                             ADD YOUR PROJECT
                         </button>

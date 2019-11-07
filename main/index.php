@@ -16,24 +16,33 @@
     <title>ProJ</title>
 
     <script>
-        $(function(){
+        $(function(e){
             $(".requestbtn").on('click',function(){
-                str = this.id;
-                $.ajax({
-                    type : 'GET',
-                    url : '../main/addrequest.php',
-                    dataType : 'html',
-                    data: {
-                        id : str
-                    },
-                    success : function(data){                                               
-                        alert(data);
-                    }   
-                });
+ 
+                cv = prompt("Why do you want to join this project?")
+                while(cv=="")
+                {
+                    cv = prompt("Why do you want to join this project?")
+                }
+
+                if(cv!=null){
+                    str = this.id;
+                    $.ajax({
+                        type : 'GET',
+                        url : '../main/addrequest.php',
+                        dataType : 'html',
+                        data: {
+                            id : str
+                        },
+                        success : function(data){                                               
+                            alert(data);
+                        }   
+                    });
+                }
             });
         });
 
-        $(function(){
+        $(function(e){
             $(".projitems").on('click',function(e){
                 curid = this.id;
                 e.stopPropagation();
@@ -58,6 +67,9 @@
 </head>
 <body>
     <?php require_once '../UI/navbar/navbar-header.php'; ?>
+        <li class="nav-item">
+            <a class="nav-link" href="../main/notifications.php">Notifications</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="../main/myprojects.php?myprojects=1">My Projects</a>
         </li>

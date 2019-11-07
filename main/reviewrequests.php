@@ -63,6 +63,9 @@
                         <tr>
                             <td>Email:</td> <td><?php echo $_SESSION['requests-email'][$i]; ?></td>
                         </tr>  
+                        <tr>
+                            <td>Message:</td> <td> I believe I am a right fit for this project! </td>
+                        </tr>
                     </table>
                 </div>
                 <br>
