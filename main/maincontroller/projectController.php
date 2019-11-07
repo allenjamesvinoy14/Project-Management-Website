@@ -239,16 +239,18 @@
         $stmt->bind_param('i',$id);
         $stmt->execute();
 
-        $usernames = $stmt->get_result();
-        $membercount = $usernames->num_rows;
+        $userinfo = $stmt->get_result();
+        $membercount = $userinfo->num_rows;
 
         $stmt->close();
         
         $_SESSION['usernames'] = array();
+        $_SESSION['memberids'] = array();
         $_SESSION['membercount'] = $membercount;
 
-        foreach($usernames as $u){
+        foreach($userinfo as $u){
             array_push($_SESSION['usernames'],$u['username']);
+            array_push($_SESSION['memberids'],$u['user_id']);
         }
     }
 ?>

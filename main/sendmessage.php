@@ -1,4 +1,6 @@
-<?php require_once 'maincontroller/projectController.php';?>
+<?php require_once 'maincontroller/projectController.php';
+    $_SESSION['message-id-cur'] = $_GET['sendid'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +19,17 @@
     <script>
         $(function(){
             $(".sendbtn").on('click',function(){
-                alert("message sent!");
-                window.history.back();
+                $.ajax({
+                    type : 'GET',
+                    url : '../main/message.php',
+                    dataType : 'html',
+                    data: {
+                        message: "send"
+                    },
+                    success : function(data){                                               
+                        alert(data);
+                    }   
+                });
             });
         });
     </script>

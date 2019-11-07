@@ -38,7 +38,8 @@
     <script>
         $(function(){
             $(".send").on('click',function(){
-                window.location = "../main/sendmessage.php";
+                id = this.id;
+                window.location = "../main/sendmessage.php?sendid="+id;
             });
         });
     </script>
@@ -92,7 +93,8 @@
                     <?php endfor; ?>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-lg send">Send Message</button>
+
+                <button id = <?php echo $_SESSION['display-project-id']; ?> class="btn btn-primary btn-lg send">Send Message</button>
             </div>
         </div>
     </div>
