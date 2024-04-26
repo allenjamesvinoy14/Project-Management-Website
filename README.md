@@ -2,3 +2,8 @@ A portal that helps an organisation to manage its projects. The members can add 
 
 
 INCREMENT 1 is developed. Yet to be deployed. 
+
+
+Drawbacks:
+Identity management pattern is old and not scalable. 
+Secrets management has not been done. 
